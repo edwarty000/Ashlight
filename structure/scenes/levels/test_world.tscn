@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://capoak3vw7433"]
+
+[ext_resource type="Script" uid="uid://b14iogo2llqit" path="res://scripts/player/player.gd" id="1_1mgh8"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8a5hx"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0huwb"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uyg78"]
+size = Vector3(50, 1, 50)
+
+[sub_resource type="BoxMesh" id="BoxMesh_eulud"]
+size = Vector3(50, 1, 50)
+
+[node name="TestWorld" type="Node3D"]
+
+[node name="Player" type="CharacterBody3D" parent="."]
+script = ExtResource("1_1mgh8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_8a5hx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+mesh = SubResource("CapsuleMesh_0huwb")
+
+[node name="CameraMount" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Player/CameraMount"]
+fov = 88.6085
+
+[node name="RayCast3D" type="RayCast3D" parent="Player/CameraMount"]
+target_position = Vector3(0, 0, -3)
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_uyg78")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_eulud")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, 0, 10, 0)
